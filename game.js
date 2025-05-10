@@ -7,8 +7,8 @@ const projectileSpeed = 15;
 const obstacleSpeed = 3;
 const obstacleEmojis = ['💣', '☄️', '🪨', '🧨', '🛢️', '🦴', '🍄', '🥚', '🥔', '🍩', '🍔', '🧊', '🪓', '🧱'];
 let gameSound;
-let gameLoopId; // Track the game loop ID for clearing it
-let gameEnded = false; // Prevent multiple endGame calls
+let gameLoopId;
+let gameEnded = false; 
 
 const phaserConfig = {
   type: Phaser.AUTO,
@@ -31,18 +31,15 @@ function preload() {
 }
 
 function create() {
-  // Initialize sounds
   gameSound = {
     bgm: this.sound.add('bgm', { loop: true, volume: 0.5 }),
     shoot: this.sound.add('shoot', { volume: 0.5 })
   };
   
-  // Start BGM when game is ready
   gameSound.bgm.play();
 }
 
 function startGame() {
-  // Ensure sounds are initialized and playing
   if (gameSound?.bgm) {
     if (!gameSound.bgm.isPlaying) {
       gameSound.bgm.play();
@@ -53,7 +50,7 @@ function startGame() {
   document.getElementById('game-scene').classList.remove('hidden');
   score = 0;
   time = 0;
-  gameEnded = false; // Reset for new game
+  gameEnded = false; 
 
   document.getElementById('score').innerText = 'Score: 0';
   document.getElementById('timer').innerText = 'Time: 0s';
@@ -71,20 +68,20 @@ function startGame() {
     if (time >= 120) endGame(true);
   }, 1000);
 
-  gameLoopId = requestAnimationFrame(gameLoop); // Start the game loop
+  gameLoopId = requestAnimationFrame(gameLoop); 
 }
 
 function restartGame() {
   document.getElementById('game-over').classList.add('hidden');
   document.querySelectorAll('.obstacle, .projectile').forEach(el => el.remove());
-  clearInterval(timeInterval); // Stop the timer interval
-  cancelAnimationFrame(gameLoopId); // Stop the game loop
-  startGame(); // Restart the game
+  clearInterval(timeInterval); 
+  cancelAnimationFrame(gameLoopId); 
+  startGame(); 
 }
 
 function gameLoop() {
   if (document.getElementById('game-scene').classList.contains('hidden')) {
-    return; // Stop the game loop if the game is over
+    return; 
   }
 
   movePlayer();
@@ -94,7 +91,7 @@ function gameLoop() {
     spawnObstacle();
   }
 
-  gameLoopId = requestAnimationFrame(gameLoop); // Continue the game loop
+  gameLoopId = requestAnimationFrame(gameLoop); 
 }
 
 function movePlayer() {
@@ -120,7 +117,6 @@ function shootProjectile() {
   proj.style.position = 'absolute';
   document.getElementById('game-scene').appendChild(proj);
 
-  // Play sound with Phaser (if initialized)
   if (gameSound?.shoot) gameSound.shoot.play();
 }
 
@@ -152,7 +148,6 @@ function moveObstacles() {
     if (top > window.innerHeight) {
       obs.remove();
     } else {
-      // Increase speed based on score
       const speedIncrease = Math.floor(score / 100) * 0.5;
       obs.style.top = `${top + obstacleSpeed + speedIncrease}px`;
       if (checkPlayerHit(obs)) {
@@ -192,10 +187,10 @@ function checkPlayerHit(obs) {
 }
 
 function endGame(won) {
-  if (gameEnded) return; // Prevent multiple calls
+  if (gameEnded) return; 
   gameEnded = true;
-  clearInterval(timeInterval); // Stop the timer interval
-  cancelAnimationFrame(gameLoopId); // Stop the game loop
+  clearInterval(timeInterval); 
+  cancelAnimationFrame(gameLoopId); 
   keys = {};
   document.getElementById('game-scene').classList.add('hidden');
   document.getElementById('game-over').classList.remove('hidden');
@@ -208,42 +203,7 @@ function endGame(won) {
   }
 }
 
-// Volume control logic
 function setVolume(vol) {
   if (gameSound?.bgm) gameSound.bgm.setVolume(vol);
   if (gameSound?.shoot) gameSound.shoot.setVolume(vol);
 }
-
-// DOM and button logic
-window.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('play-btn').onclick = startGame;
-  document.getElementById('main-menu-btn').onclick = function() {
-    document.getElementById('game-over').classList.add('hidden');
-    document.getElementById('start-screen').classList.remove('hidden');
-  };
-  document.getElementById('credits-btn').onclick = function() {
-    document.getElementById('credits-modal').classList.remove('hidden');
-  };
-  document.getElementById('close-credits-btn').onclick = function() {
-    document.getElementById('credits-modal').classList.add('hidden');
-  };
-  document.getElementById('exit-btn').onclick = function() {
-    if (confirm('Are you sure you want to exit the game?')) {
-      window.close();
-    }
-  };
-  document.getElementById('volume-slider').oninput = function(e) {
-    setVolume(parseFloat(e.target.value));
-  };
-  let isMuted = false;
-  document.getElementById('mute-btn').onclick = function() {
-    isMuted = !isMuted;
-    if (isMuted) {
-      setVolume(0);
-      this.innerText = 'Unmute';
-    } else {
-      setVolume(parseFloat(document.getElementById('volume-slider').value));
-      this.innerText = 'Mute';
-    }
-  };
-});
