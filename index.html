@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emoji Blaster 🚀</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+  <div id="start-screen" class="scene">
+    <h1>Emoji Blaster 🚀</h1>
+    <button id="play-btn">Play Game</button>
+    <button id="credits-btn">Credits</button>
+    <button id="exit-btn">Exit Game</button>
+    <div id="volume-container" class="volume-bar">
+      <label for="volume-slider">Volume:</label>
+      <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+    </div>
+  </div>
+
+  <div id="game-scene" class="scene hidden">
+    <div id="score">Score: 0</div>
+    <div id="timer">Time: 0s</div>
+    <div id="player">🚀</div>
+    <button id="mute-btn">Mute</button>
+  </div>
+
+  <div id="game-over" class="scene hidden">
+    <h1 id="game-over-title">Game Over 😵</h1>
+    <p id="final-score"></p>
+    <button onclick="restartGame()">Play Again</button>
+    <button id="main-menu-btn">Main Menu</button>
+  </div>
+
+  <div id="credits-modal" class="scene hidden" style="background: rgba(0,0,0,0.8); z-index: 10;">
+    <h2>Credits</h2>
+    <p>Made by Jericho Cid Pascua</p>
+    <button id="close-credits-btn">Close</button>
+  </div>
+
+  <!-- Load Phaser first -->
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+  <!-- Then load your game script -->
+  <script src="game.js"></script>
+  <script src="buttons.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: sans-serif;
+  overflow: hidden;
+}
+
+.scene {
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
+}
+
+#game-scene {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+
+#player {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 40px; /* Or however large your rocket emoji should be */
+}
+
+
+.projectile {
+  position: absolute;
+  font-size: 40px;
+}
+
+.obstacle {
+  position: absolute;
+  font-size: 60px;
+}
+
+#score, #timer {
+  position: absolute;
+  top: 10px;
+  font-size: 20px;
+}
+
+#score { left: 10px; }
+#timer { right: 10px; }
+
+button {
+  margin: 10px 0;
+  padding: 10px 30px;
+  font-size: 1.1em;
+  border-radius: 8px;
+  border: none;
+  background: #222;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button:hover {
+  background: #444;
+}
+
+#volume-container {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#volume-slider {
+  width: 120px;
+}
+
+#volume-container-game {
+  position: absolute;
+  top: 50px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+#mute-btn {
+  position: absolute;
+  top: 50px; /* Position below the score */
+  left: 10px; /* Same left margin as the score */
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  border: 2px solid white; /* Add white border */
+  cursor: pointer;
+}
